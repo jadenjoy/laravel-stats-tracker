@@ -1,15 +1,12 @@
 <?php
 
-use PragmaRX\Tracker\Support\Migration;
 use PragmaRX\Tracker\Vendor\Laravel\Models\Agent;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class AddAgentNameHash extends Migration
-{
-    /**
-     * Table related to this migration.
-     *
-     * @var string
-     */
+return new class extends Migration {
+
     private $table = 'tracker_agents';
 
     /**
@@ -17,10 +14,11 @@ class AddAgentNameHash extends Migration
      *
      * @return void
      */
-    public function migrateUp()
+    public function up()
     {
+
         try {
-            $this->builder->table(
+            Schema::connection("tracker")->table(
                 $this->table,
                 function ($table) {
                     $table->dropUnique('tracker_agents_name_unique');
@@ -35,7 +33,7 @@ class AddAgentNameHash extends Migration
                 $agent->save();
             });
 
-            $this->builder->table(
+            Schema::connection("tracker")->table(
                 $this->table,
                 function ($table) {
                     $table->unique('name_hash');
@@ -51,20 +49,8 @@ class AddAgentNameHash extends Migration
      *
      * @return void
      */
-    public function migrateDown()
+    public function down()
     {
-        try {
-            $this->builder->table(
-                $this->table,
-                function ($table) {
-                    $table->dropUnique('tracker_agents_name_hash_unique');
-
-                    $table->dropColumn('name_hash');
-
-                    $table->mediumText('name')->unique()->change();
-                }
-            );
-        } catch (\Exception $e) {
-        }
+        Schema::dropIfExists($this->table);
     }
-}
+};

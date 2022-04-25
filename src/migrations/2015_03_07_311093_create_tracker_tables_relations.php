@@ -1,17 +1,20 @@
 <?php
 
-use PragmaRX\Tracker\Support\Migration;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateTrackerTablesRelations extends Migration
-{
+return new class extends Migration {
+
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function migrateUp()
+    public function up()
     {
-        $this->builder->table('tracker_query_arguments', function ($table) {
+        Schema::connection("tracker")->table('tracker_query_arguments', function (Blueprint $table) {
             $table->foreign('query_id')
                 ->references('id')
                 ->on('tracker_queries')
@@ -19,7 +22,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_route_paths', function ($table) {
+        Schema::connection("tracker")->table('tracker_route_paths', function ($table) {
             $table->foreign('route_id')
                 ->references('id')
                 ->on('tracker_routes')
@@ -27,7 +30,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_route_path_parameters', function ($table) {
+        Schema::connection("tracker")->table('tracker_route_path_parameters', function ($table) {
             $table->foreign('route_path_id')
                 ->references('id')
                 ->on('tracker_route_paths')
@@ -35,7 +38,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_referers', function ($table) {
+        Schema::connection("tracker")->table('tracker_referers', function ($table) {
             $table->foreign('domain_id')
                 ->references('id')
                 ->on('tracker_domains')
@@ -43,7 +46,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_sessions', function ($table) {
+        Schema::connection("tracker")->table('tracker_sessions', function ($table) {
             $table->foreign('device_id')
                 ->references('id')
                 ->on('tracker_devices')
@@ -51,7 +54,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_sessions', function ($table) {
+        Schema::connection("tracker")->table('tracker_sessions', function ($table) {
             $table->foreign('agent_id')
                 ->references('id')
                 ->on('tracker_agents')
@@ -59,7 +62,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_sessions', function ($table) {
+        Schema::connection("tracker")->table('tracker_sessions', function ($table) {
             $table->foreign('referer_id')
                 ->references('id')
                 ->on('tracker_referers')
@@ -67,7 +70,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_sessions', function ($table) {
+        Schema::connection("tracker")->table('tracker_sessions', function ($table) {
             $table->foreign('cookie_id')
                 ->references('id')
                 ->on('tracker_cookies')
@@ -75,7 +78,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_sessions', function ($table) {
+        Schema::connection("tracker")->table('tracker_sessions', function ($table) {
             $table->foreign('geoip_id')
                 ->references('id')
                 ->on('tracker_geoip')
@@ -83,7 +86,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_log', function ($table) {
             $table->foreign('session_id')
                 ->references('id')
                 ->on('tracker_sessions')
@@ -91,7 +94,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_log', function ($table) {
             $table->foreign('path_id')
                 ->references('id')
                 ->on('tracker_paths')
@@ -99,7 +102,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_log', function ($table) {
             $table->foreign('query_id')
                 ->references('id')
                 ->on('tracker_queries')
@@ -107,7 +110,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_log', function ($table) {
             $table->foreign('route_path_id')
                 ->references('id')
                 ->on('tracker_route_paths')
@@ -115,7 +118,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_log', function ($table) {
             $table->foreign('error_id')
                 ->references('id')
                 ->on('tracker_errors')
@@ -123,7 +126,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_events_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_events_log', function ($table) {
             $table->foreign('event_id')
                 ->references('id')
                 ->on('tracker_events')
@@ -131,7 +134,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_events_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_events_log', function ($table) {
             $table->foreign('class_id')
                 ->references('id')
                 ->on('tracker_system_classes')
@@ -139,7 +142,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_events_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_events_log', function ($table) {
             $table->foreign('log_id')
                 ->references('id')
                 ->on('tracker_log')
@@ -147,7 +150,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_sql_query_bindings_parameters', function ($table) {
+        Schema::connection("tracker")->table('tracker_sql_query_bindings_parameters', function ($table) {
             $table->foreign('sql_query_bindings_id', 'tracker_sqlqb_parameters')
                 ->references('id')
                 ->on('tracker_sql_query_bindings')
@@ -155,7 +158,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_sql_queries_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_sql_queries_log', function ($table) {
             $table->foreign('log_id')
                 ->references('id')
                 ->on('tracker_log')
@@ -163,7 +166,7 @@ class CreateTrackerTablesRelations extends Migration
                 ->onDelete('cascade');
         });
 
-        $this->builder->table('tracker_sql_queries_log', function ($table) {
+        Schema::connection("tracker")->table('tracker_sql_queries_log', function ($table) {
             $table->foreign('sql_query_id')
                 ->references('id')
                 ->on('tracker_sql_queries')
@@ -177,8 +180,7 @@ class CreateTrackerTablesRelations extends Migration
      *
      * @return void
      */
-    public function migrateDown()
+    public function down()
     {
-        // Tables will be dropped in the correct order... :)
     }
-}
+};
